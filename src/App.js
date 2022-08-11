@@ -1,8 +1,8 @@
 import "./App.css";
-import { Roller } from "./components/roller";
+import Calculator from "./components/calculator";
 
 function App() {
-  return <Roller />;
+  return <Calculator />;
 }
 
 export default App;

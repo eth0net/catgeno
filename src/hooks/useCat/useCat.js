@@ -1,9 +1,12 @@
 import { useState } from "react";
+import { BLACK, NON_SILVER, NON_WHITE, SOLID, UNDILUTED } from "../../consts";
+import { UNKNOWN } from "../../consts/patterns";
 
 export function useCat(value = defaultState) {
   const [state, setState] = useState(value);
   const set = {};
   set.base = (e) => setState({ ...state, base: e?.target?.value || 0 });
+  set.dilute = (e) => setState({ ...state, dilute: e?.target?.value || 0 });
   set.tabby = (e) => setState({ ...state, tabby: e?.target?.value || 0 });
   set.pattern1 = (e) => setState({ ...state, pattern1: e?.target?.value || 0 });
   set.pattern2 = (e) => setState({ ...state, pattern2: e?.target?.value || 0 });
@@ -17,12 +20,13 @@ export function useCat(value = defaultState) {
 export default useCat;
 
 const defaultState = {
-  base: 0,
-  tabby: 0,
-  pattern1: 0,
-  pattern2: 0,
-  spotted: 0,
-  ticked: 0,
-  silver: 0,
-  white: 0,
+  base: BLACK,
+  dilute: UNDILUTED,
+  tabby: SOLID,
+  pattern1: UNKNOWN,
+  pattern2: UNKNOWN,
+  spotted: UNKNOWN,
+  ticked: UNKNOWN,
+  silver: NON_SILVER,
+  white: NON_WHITE,
 };
