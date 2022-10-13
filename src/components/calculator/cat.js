@@ -1,6 +1,6 @@
 import { Box, Grid, MenuItem, Typography } from "@mui/material";
-import { BLACK, RED, TORTIE } from "../../consts/bases";
-import { DILUTED, HET_DILUTED, NON_DILUTED } from "../../consts/dilutes";
+import { BLACK, RED, TORTIE } from "../../consts/base";
+import { DILUTED, HET_DILUTED, NON_DILUTED } from "../../consts/dilute";
 import {
   CLASSIC,
   HET_SPOTTED,
@@ -11,7 +11,7 @@ import {
   SPOTTED,
   TICKED,
   UNKNOWN,
-} from "../../consts/patterns";
+} from "../../consts/pattern";
 import { HET_SILVER, NON_SILVER, SILVER } from "../../consts/silver";
 import { HET_TABBY, SOLID, TABBY } from "../../consts/tabby";
 import { HET_WHITE, NON_WHITE, WHITE } from "../../consts/white";
