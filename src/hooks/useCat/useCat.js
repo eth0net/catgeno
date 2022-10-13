@@ -1,6 +1,10 @@
 import { useState } from "react";
-import { BLACK, NON_SILVER, NON_WHITE, SOLID, NON_DILUTED } from "../../consts";
-import { UNKNOWN } from "../../consts/patterns";
+import { BLACK } from "../../consts/base";
+import { NON_DILUTED } from "../../consts/dilute";
+import { UNKNOWN } from "../../consts/pattern";
+import { NON_SILVER } from "../../consts/silver";
+import { SOLID } from "../../consts/tabby";
+import { NON_WHITE } from "../../consts/white";
 
 export function useCat(value = defaultState) {
   const [state, setState] = useState(value);

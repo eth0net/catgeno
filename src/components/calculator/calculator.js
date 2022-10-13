@@ -8,9 +8,9 @@ import {
   HET_TICKED,
   NON_TICKED,
   NON_SPOTTED,
-} from "../../consts/patterns";
-import { BLACK, RED, TORTIE } from "../../consts/bases";
-import { DILUTED, HET_DILUTED, NON_DILUTED } from "../../consts/dilutes";
+} from "../../consts/pattern";
+import { BLACK, RED, TORTIE } from "../../consts/base";
+import { DILUTED, HET_DILUTED, NON_DILUTED } from "../../consts/dilute";
 import { SILVER, HET_SILVER, NON_SILVER } from "../../consts/silver";
 import { HET_TABBY, SOLID, TABBY } from "../../consts/tabby";
 import { useCat } from "../../hooks";
