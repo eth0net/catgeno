@@ -13,6 +13,7 @@ import { BLACK, RED, TORTIE } from "../../consts/base";
 import { DILUTED, HET_DILUTED, NON_DILUTED } from "../../consts/dilute";
 import { SILVER, HET_SILVER, NON_SILVER } from "../../consts/silver";
 import { HET_TABBY, SOLID, TABBY } from "../../consts/tabby";
+import { HET_WHITE, NON_WHITE, WHITE } from "../../consts/white";
 import { useCat } from "../../hooks";
 import { Cat } from "./cat";
 
@@ -107,7 +108,7 @@ const calculateDilutes = (male, female) => {
       dilutes.push(HET_DILUTED);
       break;
     case male === HET_DILUTED && female === HET_DILUTED:
-      dilutes.push(NON_DILUTED, HET_DILUTED, DILUTED);
+      dilutes.push(NON_DILUTED, HET_DILUTED, HET_DILUTED, DILUTED);
       break;
     case male === HET_DILUTED && female === DILUTED:
     case male === DILUTED && female === HET_DILUTED:
@@ -135,7 +136,7 @@ const calculateTabbys = (male, female) => {
       tabbys.push(HET_TABBY);
       break;
     case male === HET_TABBY && female === HET_TABBY:
-      tabbys.push(SOLID, HET_TABBY, TABBY);
+      tabbys.push(SOLID, HET_TABBY, HET_TABBY, TABBY);
       break;
     case male === HET_TABBY && female === TABBY:
     case male === TABBY && female === HET_TABBY:
@@ -188,7 +189,7 @@ const calculateSpotted = (male, female) => {
       spotted.push(HET_SPOTTED);
       break;
     case male === HET_SPOTTED && female === HET_SPOTTED:
-      spotted.push(NON_SPOTTED, HET_SPOTTED, SPOTTED);
+      spotted.push(NON_SPOTTED, HET_SPOTTED, HET_SPOTTED, SPOTTED);
       break;
     case male === HET_SPOTTED && female === SPOTTED:
     case male === SPOTTED && female === HET_SPOTTED:
@@ -231,7 +232,7 @@ const calculateTicked = (male, female) => {
       ticked.push(HET_TICKED);
       break;
     case male === HET_TICKED && female === HET_TICKED:
-      ticked.push(NON_TICKED, HET_TICKED, TICKED);
+      ticked.push(NON_TICKED, HET_TICKED, HET_TICKED, TICKED);
       break;
     case male === HET_TICKED && female === TICKED:
     case male === TICKED && female === HET_TICKED:
@@ -259,7 +260,7 @@ const calculateSilvers = (male, female) => {
       silvers.push(HET_SILVER);
       break;
     case male === HET_SILVER && female === HET_SILVER:
-      silvers.push(NON_SILVER, HET_SILVER, SILVER);
+      silvers.push(NON_SILVER, HET_SILVER, HET_SILVER, SILVER);
       break;
     case male === HET_SILVER && female === SILVER:
     case male === SILVER && female === HET_SILVER:
@@ -275,26 +276,26 @@ const calculateSilvers = (male, female) => {
 const calculateWhites = (male, female) => {
   const silvers = [];
   switch (true) {
-    case male === NON_SILVER && female === NON_SILVER:
-      silvers.push(NON_SILVER);
+    case male === NON_WHITE && female === NON_WHITE:
+      silvers.push(NON_WHITE);
       break;
-    case male === NON_SILVER && female === HET_SILVER:
-    case male === HET_SILVER && female === NON_SILVER:
-      silvers.push(NON_SILVER, HET_SILVER);
+    case male === NON_WHITE && female === HET_WHITE:
+    case male === HET_WHITE && female === NON_WHITE:
+      silvers.push(NON_WHITE, HET_WHITE);
       break;
-    case male === NON_SILVER && female === SILVER:
-    case male === SILVER && female === NON_SILVER:
-      silvers.push(HET_SILVER);
+    case male === NON_WHITE && female === WHITE:
+    case male === WHITE && female === NON_WHITE:
+      silvers.push(HET_WHITE);
       break;
-    case male === HET_SILVER && female === HET_SILVER:
-      silvers.push(NON_SILVER, HET_SILVER, SILVER);
+    case male === HET_WHITE && female === HET_WHITE:
+      silvers.push(NON_WHITE, HET_WHITE, WHITE);
       break;
-    case male === HET_SILVER && female === SILVER:
-    case male === SILVER && female === HET_SILVER:
-      silvers.push(HET_SILVER, SILVER);
+    case male === HET_WHITE && female === WHITE:
+    case male === WHITE && female === HET_WHITE:
+      silvers.push(HET_WHITE, WHITE);
       break;
-    case male === SILVER && female === SILVER:
-      silvers.push(SILVER);
+    case male === WHITE && female === WHITE:
+      silvers.push(WHITE);
       break;
   }
   return silvers;
