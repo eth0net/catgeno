@@ -33,8 +33,17 @@ export function Calculator() {
     );
     const spotted = calculateSpotted(male.spotted, female.spotted);
     const ticked = calculateTicked(male.ticked, female.ticked);
+    const whites = calculateWhites(male.white, female.white);
     setPhenos(
-      JSON.stringify({ bases, dilutes, tabbys, patterns, spotted, ticked })
+      JSON.stringify({
+        bases,
+        dilutes,
+        tabbys,
+        patterns,
+        spotted,
+        ticked,
+        whites,
+      })
     );
   };
 
@@ -236,6 +245,34 @@ const calculateTicked = (male, female) => {
 };
 
 const calculateSilvers = (male, female) => {
+  const silvers = [];
+  switch (true) {
+    case male === NON_SILVER && female === NON_SILVER:
+      silvers.push(NON_SILVER);
+      break;
+    case male === NON_SILVER && female === HET_SILVER:
+    case male === HET_SILVER && female === NON_SILVER:
+      silvers.push(NON_SILVER, HET_SILVER);
+      break;
+    case male === NON_SILVER && female === SILVER:
+    case male === SILVER && female === NON_SILVER:
+      silvers.push(HET_SILVER);
+      break;
+    case male === HET_SILVER && female === HET_SILVER:
+      silvers.push(NON_SILVER, HET_SILVER, SILVER);
+      break;
+    case male === HET_SILVER && female === SILVER:
+    case male === SILVER && female === HET_SILVER:
+      silvers.push(HET_SILVER, SILVER);
+      break;
+    case male === SILVER && female === SILVER:
+      silvers.push(SILVER);
+      break;
+  }
+  return silvers;
+};
+
+const calculateWhites = (male, female) => {
   const silvers = [];
   switch (true) {
     case male === NON_SILVER && female === NON_SILVER:
