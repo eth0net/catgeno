@@ -1,4 +1,4 @@
-import { Button, Stack } from "@mui/material";
+import { Button, Stack, Typography } from "@mui/material";
 import { useState } from "react";
 import {
   HET_SPOTTED,
@@ -20,7 +20,7 @@ import { Cat } from "./cat";
 export function Calculator() {
   const [male, setMale] = useCat();
   const [female, setFemale] = useCat();
-  const [phenos, setPhenos] = useState([]);
+  const [genes, setGenes] = useState({});
 
   const calculate = () => {
     const bases = calculateBases(male.base, female.base);
@@ -34,22 +34,27 @@ export function Calculator() {
     );
     const spotted = calculateSpotted(male.spotted, female.spotted);
     const ticked = calculateTicked(male.ticked, female.ticked);
+    const silvers = calculateSilvers(male.silver, female.silver);
     const whites = calculateWhites(male.white, female.white);
-    setPhenos(
-      JSON.stringify({
+
+    setGenes(
+      mapGenes({
         bases,
         dilutes,
         tabbys,
         patterns,
         spotted,
         ticked,
+        silvers,
         whites,
       })
     );
+
+    console.log(genes);
   };
 
   return (
-    <Stack alignItems="center">
+    <Stack alignItems="center" spacing={2}>
       <Stack direction="row" spacing={4} padding={2}>
         <Cat state={male} set={setMale} />
         <Cat state={female} set={setFemale} female />
@@ -57,10 +62,59 @@ export function Calculator() {
 
       <Button onClick={calculate}>Calculate</Button>
 
-      {phenos.length > 0 && <Stack>{phenos}</Stack>}
+      <Stack alignItems="center" spacing={2}>
+        <Typography>Male Kittens</Typography>
+        <Stack alignItems="center">
+          {genes?.male?.map((p, i) => (
+            <div key={i}>{p}</div>
+          ))}
+        </Stack>
+        <Typography>Female Kittens</Typography>
+        <Stack alignItems="center">
+          {genes?.female?.map((p, i) => (
+            <div key={i}>{p}</div>
+          ))}
+        </Stack>
+      </Stack>
     </Stack>
   );
 }
+
+const mapGenes = (genes) =>
+  Object.fromEntries(
+    Object.entries(genes.bases).map(([sex, bases]) => [
+      sex,
+      bases
+        .map((base) =>
+          genes.dilutes.map((dilute) =>
+            genes.tabbys.map((tabby) =>
+              genes.patterns.map((pattern) =>
+                genes.spotted.map((spotted) =>
+                  genes.ticked.map((ticked) =>
+                    genes.silvers.map((silver) =>
+                      genes.whites.map((white) =>
+                        JSON.stringify({
+                          base,
+                          dilute,
+                          tabby,
+                          pattern1: pattern[0],
+                          pattern2: pattern[1],
+                          spotted,
+                          ticked,
+                          silver,
+                          white,
+                        })
+                      )
+                    )
+                  )
+                )
+              )
+            )
+          )
+        )
+        .flat(6),
+    ])
+  );
 
 const calculateBases = (male, female) => {
   const bases = { male: [], female: [] };
