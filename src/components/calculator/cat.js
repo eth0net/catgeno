@@ -1,20 +1,20 @@
 import { Box, Grid, MenuItem, Typography } from "@mui/material";
 import { BLACK, RED, TORTIE } from "../../consts/bases";
-import { DILUTED, UNDILUTED, UNDILUTED_CARRIER } from "../../consts/dilutes";
+import { DILUTED, HET_DILUTED, NON_DILUTED } from "../../consts/dilutes";
 import {
   CLASSIC,
+  HET_SPOTTED,
+  HET_TICKED,
   MACKEREL,
   NON_SPOTTED,
   NON_TICKED,
   SPOTTED,
-  SPOTTED_CARRIER,
   TICKED,
-  TICKED_CARRIER,
   UNKNOWN,
 } from "../../consts/patterns";
-import { SOLID, TABBY, TABBY_CARRIER } from "../../consts/tabby";
-import { NON_SILVER, SILVER, SILVER_CARRIER } from "../../consts/silver";
-import { NON_WHITE, WHITE, WHITE_CARRIER } from "../../consts/white";
+import { HET_SILVER, NON_SILVER, SILVER } from "../../consts/silver";
+import { HET_TABBY, SOLID, TABBY } from "../../consts/tabby";
+import { HET_WHITE, NON_WHITE, WHITE } from "../../consts/white";
 import { Select } from "./select";
 
 export function Cat({ female, state, set }) {
@@ -37,8 +37,8 @@ export function Cat({ female, state, set }) {
 
         <Grid item xs={12} sm={6} md={4}>
           <Select label="Dilute" value={state?.dilute} onChange={set?.dilute}>
-            <MenuItem value={UNDILUTED}>Non-dilute</MenuItem>
-            <MenuItem value={UNDILUTED_CARRIER}>Non-dilute, carrier</MenuItem>
+            <MenuItem value={NON_DILUTED}>Non-dilute</MenuItem>
+            <MenuItem value={HET_DILUTED}>Non-dilute, carrier</MenuItem>
             <MenuItem value={DILUTED}>Dilute</MenuItem>
           </Select>
         </Grid>
@@ -46,7 +46,7 @@ export function Cat({ female, state, set }) {
         <Grid item xs={12} sm={6} md={4}>
           <Select label="Tabby" value={state?.tabby} onChange={set?.tabby}>
             <MenuItem value={SOLID}>Solid</MenuItem>
-            <MenuItem value={TABBY_CARRIER}>Tabby, carrier</MenuItem>
+            <MenuItem value={HET_TABBY}>Tabby, het</MenuItem>
             <MenuItem value={TABBY}>Tabby</MenuItem>
           </Select>
         </Grid>
@@ -83,7 +83,7 @@ export function Cat({ female, state, set }) {
           >
             <MenuItem value={UNKNOWN}>Unknown</MenuItem>
             <MenuItem value={NON_SPOTTED}>Non-spotted</MenuItem>
-            <MenuItem value={SPOTTED_CARRIER}>Spotted, carrier</MenuItem>
+            <MenuItem value={HET_SPOTTED}>Spotted, het</MenuItem>
             <MenuItem value={SPOTTED}>Spotted</MenuItem>
           </Select>
         </Grid>
@@ -92,7 +92,7 @@ export function Cat({ female, state, set }) {
           <Select label="Ticked" value={state?.ticked} onChange={set?.ticked}>
             <MenuItem value={UNKNOWN}>Unknown</MenuItem>
             <MenuItem value={NON_TICKED}>Non-ticked</MenuItem>
-            <MenuItem value={TICKED_CARRIER}>Ticked, carrier</MenuItem>
+            <MenuItem value={HET_TICKED}>Ticked, het</MenuItem>
             <MenuItem value={TICKED}>Ticked</MenuItem>
           </Select>
         </Grid>
@@ -106,7 +106,7 @@ export function Cat({ female, state, set }) {
             <MenuItem value={NON_SILVER}>
               Non-{silverLabel.toLowerCase()}
             </MenuItem>
-            <MenuItem value={SILVER_CARRIER}>{silverLabel}, carrier</MenuItem>
+            <MenuItem value={HET_SILVER}>{silverLabel}, het</MenuItem>
             <MenuItem value={SILVER}>{silverLabel}</MenuItem>
           </Select>
         </Grid>
@@ -114,7 +114,7 @@ export function Cat({ female, state, set }) {
         <Grid item xs={12} sm={6} md={4}>
           <Select label="White" value={state?.white} onChange={set?.white}>
             <MenuItem value={NON_WHITE}>No white</MenuItem>
-            <MenuItem value={WHITE_CARRIER}>With white</MenuItem>
+            <MenuItem value={HET_WHITE}>With white</MenuItem>
             <MenuItem value={WHITE}>White</MenuItem>
           </Select>
         </Grid>

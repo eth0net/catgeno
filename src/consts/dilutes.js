@@ -1,3 +1,3 @@
-export const UNDILUTED = 0;
-export const UNDILUTED_CARRIER = 1;
+export const NON_DILUTED = 0;
+export const HET_DILUTED = 1;
 export const DILUTED = 2;

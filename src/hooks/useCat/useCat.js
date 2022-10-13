@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { BLACK, NON_SILVER, NON_WHITE, SOLID, UNDILUTED } from "../../consts";
+import { BLACK, NON_SILVER, NON_WHITE, SOLID, NON_DILUTED } from "../../consts";
 import { UNKNOWN } from "../../consts/patterns";
 
 export function useCat(value = defaultState) {
@@ -21,7 +21,7 @@ export default useCat;
 
 const defaultState = {
   base: BLACK,
-  dilute: UNDILUTED,
+  dilute: NON_DILUTED,
   tabby: SOLID,
   pattern1: UNKNOWN,
   pattern2: UNKNOWN,
