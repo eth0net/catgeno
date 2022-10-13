@@ -4,6 +4,9 @@ import {
   HET_SPOTTED,
   SPOTTED,
   UNKNOWN,
+  TICKED,
+  HET_TICKED,
+  NON_TICKED,
   NON_SPOTTED,
 } from "../../consts/patterns";
 import { BLACK, RED, TORTIE } from "../../consts/bases";
@@ -28,7 +31,10 @@ export function Calculator() {
       female.pattern2
     );
     const spotted = calculateSpotted(male.spotted, female.spotted);
-    setPhenos(JSON.stringify({ bases, dilutes, tabbys, patterns, spotted }));
+    const ticked = calculateTicked(male.ticked, female.ticked);
+    setPhenos(
+      JSON.stringify({ bases, dilutes, tabbys, patterns, spotted, ticked })
+    );
   };
 
   return (
@@ -183,6 +189,49 @@ const calculateSpotted = (male, female) => {
       break;
   }
   return spotted;
+};
+
+const calculateTicked = (male, female) => {
+  const ticked = [];
+  switch (true) {
+    case male === UNKNOWN && female === UNKNOWN:
+      ticked.push(UNKNOWN);
+      break;
+    case male === UNKNOWN && female === NON_TICKED:
+    case male === NON_TICKED && female === UNKNOWN:
+      ticked.push(UNKNOWN, NON_TICKED);
+      break;
+    case male === UNKNOWN && female === HET_TICKED:
+    case male === HET_TICKED && female === UNKNOWN:
+      ticked.push(UNKNOWN, HET_TICKED);
+      break;
+    case male === UNKNOWN && female === TICKED:
+    case male === TICKED && female === UNKNOWN:
+      ticked.push(UNKNOWN, TICKED);
+      break;
+    case male === NON_TICKED && female === NON_TICKED:
+      ticked.push(NON_TICKED);
+      break;
+    case male === NON_TICKED && female === HET_TICKED:
+    case male === HET_TICKED && female === NON_TICKED:
+      ticked.push(NON_TICKED, HET_TICKED);
+      break;
+    case male === NON_TICKED && female === TICKED:
+    case male === TICKED && female === NON_TICKED:
+      ticked.push(HET_TICKED);
+      break;
+    case male === HET_TICKED && female === HET_TICKED:
+      ticked.push(NON_TICKED, HET_TICKED, TICKED);
+      break;
+    case male === HET_TICKED && female === TICKED:
+    case male === TICKED && female === HET_TICKED:
+      ticked.push(HET_TICKED, TICKED);
+      break;
+    case male === TICKED && female === TICKED:
+      ticked.push(TICKED);
+      break;
+  }
+  return ticked;
 };
 
 const sortDesc = (a, b) => b - a;
