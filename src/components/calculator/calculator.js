@@ -11,6 +11,7 @@ import {
 } from "../../consts/patterns";
 import { BLACK, RED, TORTIE } from "../../consts/bases";
 import { DILUTED, HET_DILUTED, NON_DILUTED } from "../../consts/dilutes";
+import { SILVER, HET_SILVER, NON_SILVER } from "../../consts/silver";
 import { HET_TABBY, SOLID, TABBY } from "../../consts/tabby";
 import { useCat } from "../../hooks";
 import { Cat } from "./cat";
@@ -232,6 +233,34 @@ const calculateTicked = (male, female) => {
       break;
   }
   return ticked;
+};
+
+const calculateSilvers = (male, female) => {
+  const silvers = [];
+  switch (true) {
+    case male === NON_SILVER && female === NON_SILVER:
+      silvers.push(NON_SILVER);
+      break;
+    case male === NON_SILVER && female === HET_SILVER:
+    case male === HET_SILVER && female === NON_SILVER:
+      silvers.push(NON_SILVER, HET_SILVER);
+      break;
+    case male === NON_SILVER && female === SILVER:
+    case male === SILVER && female === NON_SILVER:
+      silvers.push(HET_SILVER);
+      break;
+    case male === HET_SILVER && female === HET_SILVER:
+      silvers.push(NON_SILVER, HET_SILVER, SILVER);
+      break;
+    case male === HET_SILVER && female === SILVER:
+    case male === SILVER && female === HET_SILVER:
+      silvers.push(HET_SILVER, SILVER);
+      break;
+    case male === SILVER && female === SILVER:
+      silvers.push(SILVER);
+      break;
+  }
+  return silvers;
 };
 
 const sortDesc = (a, b) => b - a;
