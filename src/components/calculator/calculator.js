@@ -1,5 +1,11 @@
 import { Button, Stack } from "@mui/material";
 import { useState } from "react";
+import {
+  HET_SPOTTED,
+  SPOTTED,
+  UNKNOWN,
+  NON_SPOTTED,
+} from "../../consts/patterns";
 import { BLACK, RED, TORTIE } from "../../consts/bases";
 import { DILUTED, HET_DILUTED, NON_DILUTED } from "../../consts/dilutes";
 import { HET_TABBY, SOLID, TABBY } from "../../consts/tabby";
@@ -21,7 +27,8 @@ export function Calculator() {
       female.pattern1,
       female.pattern2
     );
-    setPhenos(JSON.stringify({ bases, dilutes, tabbys, patterns }));
+    const spotted = calculateSpotted(male.spotted, female.spotted);
+    setPhenos(JSON.stringify({ bases, dilutes, tabbys, patterns, spotted }));
   };
 
   return (
@@ -133,6 +140,49 @@ const calculatePatterns = (male1, male2, female1, female2) => {
     [male2, female2].sort(sortDesc),
   ];
   return patterns.sort(([a0, a1], [b0, b1]) => a0 + a1 - (b0 + b1));
+};
+
+const calculateSpotted = (male, female) => {
+  const spotted = [];
+  switch (true) {
+    case male === UNKNOWN && female === UNKNOWN:
+      spotted.push(UNKNOWN);
+      break;
+    case male === UNKNOWN && female === NON_SPOTTED:
+    case male === NON_SPOTTED && female === UNKNOWN:
+      spotted.push(UNKNOWN, NON_SPOTTED);
+      break;
+    case male === UNKNOWN && female === HET_SPOTTED:
+    case male === HET_SPOTTED && female === UNKNOWN:
+      spotted.push(UNKNOWN, HET_SPOTTED);
+      break;
+    case male === UNKNOWN && female === SPOTTED:
+    case male === SPOTTED && female === UNKNOWN:
+      spotted.push(UNKNOWN, SPOTTED);
+      break;
+    case male === NON_SPOTTED && female === NON_SPOTTED:
+      spotted.push(NON_SPOTTED);
+      break;
+    case male === NON_SPOTTED && female === HET_SPOTTED:
+    case male === HET_SPOTTED && female === NON_SPOTTED:
+      spotted.push(NON_SPOTTED, HET_SPOTTED);
+      break;
+    case male === NON_SPOTTED && female === SPOTTED:
+    case male === SPOTTED && female === NON_SPOTTED:
+      spotted.push(HET_SPOTTED);
+      break;
+    case male === HET_SPOTTED && female === HET_SPOTTED:
+      spotted.push(NON_SPOTTED, HET_SPOTTED, SPOTTED);
+      break;
+    case male === HET_SPOTTED && female === SPOTTED:
+    case male === SPOTTED && female === HET_SPOTTED:
+      spotted.push(HET_SPOTTED, SPOTTED);
+      break;
+    case male === SPOTTED && female === SPOTTED:
+      spotted.push(SPOTTED);
+      break;
+  }
+  return spotted;
 };
 
 const sortDesc = (a, b) => b - a;
