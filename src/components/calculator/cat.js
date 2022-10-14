@@ -2,6 +2,7 @@ import { Box, Grid, MenuItem, Typography } from "@mui/material";
 import { HET_TABBY, SOLID, TABBY } from "../../consts/agouti";
 import { BLACK, RED, TORTIE } from "../../consts/base";
 import { DILUTED, HET_DILUTED, NON_DILUTED } from "../../consts/dilute";
+import { BLUE, HET_BLUE, NON_BLUE } from "../../consts/eyes";
 import {
   CLASSIC,
   HET_SPOTTED,
@@ -116,6 +117,14 @@ export function Cat({ female, state, set }) {
             <MenuItem value={NON_WHITE}>No white</MenuItem>
             <MenuItem value={HET_WHITE}>With white</MenuItem>
             <MenuItem value={WHITE}>White</MenuItem>
+          </Select>
+        </Grid>
+
+        <Grid item xs={12} sm={6} md={4}>
+          <Select label="Eyes" value={state?.eyes} onChange={set?.eyes}>
+            <MenuItem value={NON_BLUE}>Non-blue</MenuItem>
+            <MenuItem value={HET_BLUE}>Blue, het</MenuItem>
+            <MenuItem value={BLUE}>Blue</MenuItem>
           </Select>
         </Grid>
       </Grid>

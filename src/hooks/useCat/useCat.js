@@ -2,6 +2,7 @@ import { useState } from "react";
 import { SOLID } from "../../consts/agouti";
 import { BLACK } from "../../consts/base";
 import { NON_DILUTED } from "../../consts/dilute";
+import { NON_BLUE } from "../../consts/eyes";
 import { UNKNOWN } from "../../consts/pattern";
 import { NON_SILVER } from "../../consts/silver";
 import { NON_WHITE } from "../../consts/white";
@@ -18,6 +19,7 @@ export function useCat(value = defaultState) {
   set.ticked = (e) => setState({ ...state, ticked: e?.target?.value || 0 });
   set.silver = (e) => setState({ ...state, silver: e?.target?.value || 0 });
   set.white = (e) => setState({ ...state, white: e?.target?.value || 0 });
+  set.eyes = (e) => setState({ ...state, eyes: e?.target?.value || 0 });
   return [state, set];
 }
 
@@ -33,4 +35,5 @@ const defaultState = {
   ticked: UNKNOWN,
   silver: NON_SILVER,
   white: NON_WHITE,
+  eyes: NON_BLUE,
 };

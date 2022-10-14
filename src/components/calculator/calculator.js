@@ -3,6 +3,7 @@ import { useState } from "react";
 import { HET_TABBY, SOLID, TABBY } from "../../consts/agouti";
 import { BLACK, RED, TORTIE } from "../../consts/base";
 import { DILUTED, HET_DILUTED, NON_DILUTED } from "../../consts/dilute";
+import { BLUE, HET_BLUE, NON_BLUE } from "../../consts/eyes";
 import {
   HET_SPOTTED,
   HET_TICKED,
@@ -36,6 +37,7 @@ export function Calculator() {
     const ticked = calculateTicked(male.ticked, female.ticked);
     const silvers = calculateSilvers(male.silver, female.silver);
     const whites = calculateWhites(male.white, female.white);
+    const eyes = calculateEyes(male.eyes, female.eyes);
 
     setGenes(
       mapGenes({
@@ -47,6 +49,7 @@ export function Calculator() {
         ticked,
         silvers,
         whites,
+        eyes,
       })
     );
 
@@ -95,17 +98,20 @@ const mapGenes = (genes) =>
                   genes.ticked.map((ticked) =>
                     genes.silvers.map((silver) =>
                       genes.whites.map((white) =>
-                        JSON.stringify({
-                          base,
-                          dilute,
-                          agouti,
-                          pattern1: pattern[0],
-                          pattern2: pattern[1],
-                          spotted,
-                          ticked,
-                          silver,
-                          white,
-                        })
+                        genes.eyes.map((eye) =>
+                          JSON.stringify({
+                            base,
+                            dilute,
+                            agouti,
+                            pattern1: pattern[0],
+                            pattern2: pattern[1],
+                            spotted,
+                            ticked,
+                            silver,
+                            white,
+                            eye,
+                          })
+                        )
                       )
                     )
                   )
@@ -114,7 +120,7 @@ const mapGenes = (genes) =>
             )
           )
         )
-        .flat(6),
+        .flat(Infinity),
     ])
   );
 
@@ -330,31 +336,59 @@ const calculateSilvers = (male, female) => {
 };
 
 const calculateWhites = (male, female) => {
-  const silvers = [];
+  const whites = [];
   switch (true) {
     case male === NON_WHITE && female === NON_WHITE:
-      silvers.push(NON_WHITE);
+      whites.push(NON_WHITE);
       break;
     case male === NON_WHITE && female === HET_WHITE:
     case male === HET_WHITE && female === NON_WHITE:
-      silvers.push(NON_WHITE, HET_WHITE);
+      whites.push(NON_WHITE, HET_WHITE);
       break;
     case male === NON_WHITE && female === WHITE:
     case male === WHITE && female === NON_WHITE:
-      silvers.push(HET_WHITE);
+      whites.push(HET_WHITE);
       break;
     case male === HET_WHITE && female === HET_WHITE:
-      silvers.push(NON_WHITE, HET_WHITE, WHITE);
+      whites.push(NON_WHITE, HET_WHITE, WHITE);
       break;
     case male === HET_WHITE && female === WHITE:
     case male === WHITE && female === HET_WHITE:
-      silvers.push(HET_WHITE, WHITE);
+      whites.push(HET_WHITE, WHITE);
       break;
     case male === WHITE && female === WHITE:
-      silvers.push(WHITE);
+      whites.push(WHITE);
       break;
   }
-  return silvers;
+  return whites;
+};
+
+const calculateEyes = (male, female) => {
+  const eyes = [];
+  switch (true) {
+    case male === NON_BLUE && female === NON_BLUE:
+      eyes.push(NON_BLUE);
+      break;
+    case male === NON_BLUE && female === HET_BLUE:
+    case male === HET_BLUE && female === NON_BLUE:
+      eyes.push(NON_BLUE, HET_BLUE);
+      break;
+    case male === NON_BLUE && female === BLUE:
+    case male === BLUE && female === NON_BLUE:
+      eyes.push(HET_BLUE);
+      break;
+    case male === HET_BLUE && female === HET_BLUE:
+      eyes.push(NON_BLUE, HET_BLUE, BLUE);
+      break;
+    case male === HET_BLUE && female === BLUE:
+    case male === BLUE && female === HET_BLUE:
+      eyes.push(HET_BLUE, BLUE);
+      break;
+    case male === BLUE && female === BLUE:
+      eyes.push(BLUE);
+      break;
+  }
+  return eyes;
 };
 
 const sortDesc = (a, b) => b - a;
