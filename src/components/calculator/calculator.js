@@ -20,7 +20,7 @@ import { Cat } from "./cat";
 export function Calculator() {
   const [male, setMale] = useCat();
   const [female, setFemale] = useCat();
-  const [genes, setGenes] = useState({});
+  const [genes, setGenes] = useState();
 
   const calculate = () => {
     const bases = calculateBases(male.base, female.base);
@@ -62,20 +62,22 @@ export function Calculator() {
 
       <Button onClick={calculate}>Calculate</Button>
 
-      <Stack alignItems="center" spacing={2}>
-        <Typography>Male Kittens</Typography>
-        <Stack alignItems="center">
-          {genes?.male?.map((p, i) => (
-            <div key={i}>{p}</div>
-          ))}
+      {genes && (
+        <Stack alignItems="center" spacing={2}>
+          <Typography>Male Kittens</Typography>
+          <Stack alignItems="center">
+            {genes?.male?.map((p, i) => (
+              <div key={i}>{p}</div>
+            ))}
+          </Stack>
+          <Typography>Female Kittens</Typography>
+          <Stack alignItems="center">
+            {genes?.female?.map((p, i) => (
+              <div key={i}>{p}</div>
+            ))}
+          </Stack>
         </Stack>
-        <Typography>Female Kittens</Typography>
-        <Stack alignItems="center">
-          {genes?.female?.map((p, i) => (
-            <div key={i}>{p}</div>
-          ))}
-        </Stack>
-      </Stack>
+      )}
     </Stack>
   );
 }
