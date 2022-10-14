@@ -1,18 +1,18 @@
 import { Button, Stack, Typography } from "@mui/material";
 import { useState } from "react";
-import {
-  HET_SPOTTED,
-  SPOTTED,
-  UNKNOWN,
-  TICKED,
-  HET_TICKED,
-  NON_TICKED,
-  NON_SPOTTED,
-} from "../../consts/pattern";
+import { HET_TABBY, SOLID, TABBY } from "../../consts/agouti";
 import { BLACK, RED, TORTIE } from "../../consts/base";
 import { DILUTED, HET_DILUTED, NON_DILUTED } from "../../consts/dilute";
-import { SILVER, HET_SILVER, NON_SILVER } from "../../consts/silver";
-import { HET_TABBY, SOLID, TABBY } from "../../consts/tabby";
+import {
+  HET_SPOTTED,
+  HET_TICKED,
+  NON_SPOTTED,
+  NON_TICKED,
+  SPOTTED,
+  TICKED,
+  UNKNOWN,
+} from "../../consts/pattern";
+import { HET_SILVER, NON_SILVER, SILVER } from "../../consts/silver";
 import { HET_WHITE, NON_WHITE, WHITE } from "../../consts/white";
 import { useCat } from "../../hooks";
 import { Cat } from "./cat";
@@ -25,7 +25,7 @@ export function Calculator() {
   const calculate = () => {
     const bases = calculateBases(male.base, female.base);
     const dilutes = calculateDilutes(male.dilute, female.dilute);
-    const tabbys = calculateTabbys(male.tabby, female.tabby);
+    const agoutis = calculateAgoutis(male.agouti, female.agouti);
     const patterns = calculatePatterns(
       male.pattern1,
       male.pattern2,
@@ -41,7 +41,7 @@ export function Calculator() {
       mapGenes({
         bases,
         dilutes,
-        tabbys,
+        agoutis,
         patterns,
         spotted,
         ticked,
@@ -87,7 +87,7 @@ const mapGenes = (genes) =>
       bases
         .map((base) =>
           genes.dilutes.map((dilute) =>
-            genes.tabbys.map((tabby) =>
+            genes.agoutis.map((agouti) =>
               genes.patterns.map((pattern) =>
                 genes.spotted.map((spotted) =>
                   genes.ticked.map((ticked) =>
@@ -96,7 +96,7 @@ const mapGenes = (genes) =>
                         JSON.stringify({
                           base,
                           dilute,
-                          tabby,
+                          agouti,
                           pattern1: pattern[0],
                           pattern2: pattern[1],
                           spotted,
@@ -175,32 +175,32 @@ const calculateDilutes = (male, female) => {
   return dilutes;
 };
 
-const calculateTabbys = (male, female) => {
-  const tabbys = [];
+const calculateAgoutis = (male, female) => {
+  const agoutis = [];
   switch (true) {
     case male === SOLID && female === SOLID:
-      tabbys.push(SOLID);
+      agoutis.push(SOLID);
       break;
     case male === SOLID && female === HET_TABBY:
     case male === HET_TABBY && female === SOLID:
-      tabbys.push(SOLID, HET_TABBY);
+      agoutis.push(SOLID, HET_TABBY);
       break;
     case male === SOLID && female === TABBY:
     case male === TABBY && female === SOLID:
-      tabbys.push(HET_TABBY);
+      agoutis.push(HET_TABBY);
       break;
     case male === HET_TABBY && female === HET_TABBY:
-      tabbys.push(SOLID, HET_TABBY, HET_TABBY, TABBY);
+      agoutis.push(SOLID, HET_TABBY, HET_TABBY, TABBY);
       break;
     case male === HET_TABBY && female === TABBY:
     case male === TABBY && female === HET_TABBY:
-      tabbys.push(HET_TABBY, TABBY);
+      agoutis.push(HET_TABBY, TABBY);
       break;
     case male === TABBY && female === TABBY:
-      tabbys.push(TABBY);
+      agoutis.push(TABBY);
       break;
   }
-  return tabbys;
+  return agoutis;
 };
 
 const calculatePatterns = (male1, male2, female1, female2) => {

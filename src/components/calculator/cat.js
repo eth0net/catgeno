@@ -1,4 +1,5 @@
 import { Box, Grid, MenuItem, Typography } from "@mui/material";
+import { HET_TABBY, SOLID, TABBY } from "../../consts/agouti";
 import { BLACK, RED, TORTIE } from "../../consts/base";
 import { DILUTED, HET_DILUTED, NON_DILUTED } from "../../consts/dilute";
 import {
@@ -13,12 +14,11 @@ import {
   UNKNOWN,
 } from "../../consts/pattern";
 import { HET_SILVER, NON_SILVER, SILVER } from "../../consts/silver";
-import { HET_TABBY, SOLID, TABBY } from "../../consts/tabby";
 import { HET_WHITE, NON_WHITE, WHITE } from "../../consts/white";
 import { Select } from "./select";
 
 export function Cat({ female, state, set }) {
-  const silverLabel = state.tabby === 0 ? "Silver" : "Smoke";
+  const silverLabel = state.agouti === 0 ? "Silver" : "Smoke";
 
   return (
     <Box>
@@ -44,7 +44,7 @@ export function Cat({ female, state, set }) {
         </Grid>
 
         <Grid item xs={12} sm={6} md={4}>
-          <Select label="Tabby" value={state?.tabby} onChange={set?.tabby}>
+          <Select label="Tabby" value={state?.agouti} onChange={set?.agouti}>
             <MenuItem value={SOLID}>Solid</MenuItem>
             <MenuItem value={HET_TABBY}>Tabby, het</MenuItem>
             <MenuItem value={TABBY}>Tabby</MenuItem>
