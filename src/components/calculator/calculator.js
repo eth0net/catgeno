@@ -5,8 +5,10 @@ import { BLACK, RED, TORTIE } from "../../consts/base";
 import { DILUTED, HET_DILUTED, NON_DILUTED } from "../../consts/dilute";
 import { BLUE, HET_BLUE, NON_BLUE } from "../../consts/eyes";
 import {
+  CLASSIC,
   HET_SPOTTED,
   HET_TICKED,
+  MACKEREL,
   NON_SPOTTED,
   NON_TICKED,
   SPOTTED,
@@ -52,8 +54,6 @@ export function Calculator() {
         eyes,
       })
     );
-
-    console.log(genes);
   };
 
   return (
@@ -90,39 +90,100 @@ const mapGenes = (genes) =>
     Object.entries(genes.bases).map(([sex, bases]) => [
       sex,
       bases
-        .map((base) =>
-          genes.dilutes.map((dilute) =>
-            genes.agoutis.map((agouti) =>
-              genes.patterns.map((pattern) =>
-                genes.spotted.map((spotted) =>
-                  genes.ticked.map((ticked) =>
-                    genes.silvers.map((silver) =>
-                      genes.whites.map((white) =>
-                        genes.eyes.map((eye) =>
-                          JSON.stringify({
-                            base,
-                            dilute,
-                            agouti,
-                            pattern1: pattern[0],
-                            pattern2: pattern[1],
-                            spotted,
-                            ticked,
-                            silver,
-                            white,
-                            eye,
-                          })
-                        )
-                      )
-                    )
-                  )
-                )
+        .map((base) => spreadGenes(base, genes))
+        .flat(8)
+        .map(phenoString),
+    ])
+  );
+
+const spreadGenes = (base, genes) => {
+  return genes.dilutes.map((dilute) =>
+    genes.agoutis.map((agouti) =>
+      genes.patterns.map((pattern) =>
+        genes.spotted.map((spotted) =>
+          genes.ticked.map((ticked) =>
+            genes.silvers.map((silver) =>
+              genes.whites.map((white) =>
+                genes.eyes.map((eye) => ({
+                  base,
+                  dilute,
+                  agouti,
+                  pattern1: pattern[0],
+                  pattern2: pattern[1],
+                  spotted,
+                  ticked,
+                  silver,
+                  white,
+                  eye,
+                }))
               )
             )
           )
         )
-        .flat(Infinity),
-    ])
+      )
+    )
   );
+};
+
+const phenoString = ({
+  base,
+  dilute,
+  agouti,
+  pattern1,
+  pattern2,
+  spotted,
+  ticked,
+  silver,
+  white,
+  eye,
+}) => {
+  let pheno = [];
+
+  switch (base) {
+    case BLACK:
+      pheno.push(dilute == DILUTED ? "Blue" : "Black");
+      break;
+    case RED:
+      pheno.push(dilute == DILUTED ? "Cream" : "Red");
+      break;
+    case TORTIE:
+      pheno.push(
+        dilute == DILUTED ? "Blue Tortoiseshell" : "Black Tortoiseshell"
+      );
+      break;
+  }
+
+  if (agouti == HET_TABBY || agouti == TABBY) {
+    if (ticked == TICKED || ticked == HET_TICKED) {
+      pheno.push("Ticked Tabby");
+    } else if (spotted == SPOTTED || spotted == HET_SPOTTED) {
+      pheno.push("Spotted Tabby");
+    } else if (pattern1 == MACKEREL || pattern2 == MACKEREL) {
+      pheno.push("Mackerel Tabby");
+    } else if (pattern1 == CLASSIC || pattern2 == CLASSIC) {
+      pheno.push("Classic Tabby");
+    }
+  }
+
+  if (silver == HET_SILVER || silver == SILVER) {
+    pheno.push("Silver");
+  }
+
+  switch (white) {
+    case HET_WHITE:
+      pheno.push("with White");
+      break;
+    case WHITE:
+      pheno.push("White");
+      break;
+  }
+
+  if (eye == BLUE || eye == HET_BLUE) {
+    pheno.push("(Blue Eyed)");
+  }
+
+  return pheno.join(" ");
+};
 
 const calculateBases = (male, female) => {
   const bases = { male: [], female: [] };
