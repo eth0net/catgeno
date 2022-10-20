@@ -73,18 +73,28 @@ export function Calculator() {
       <Button onClick={calculate}>Calculate</Button>
 
       {genes && (
-        <Stack alignItems="center" spacing={2}>
-          <Typography>Male Kittens</Typography>
-          <Stack alignItems="center">
-            {genes?.male?.map((p, i) => (
-              <div key={i}>{p}</div>
-            ))}
+        <Stack alignItems="space-evenly" direction="row" spacing={8}>
+          <Stack alignItems="center" spacing={1}>
+            <Typography>Male Kittens</Typography>
+            <Stack alignItems="center" spacing={1}>
+              {genes?.male?.map((p, i) => (
+                <Stack key={i} direction="row" spacing={1}>
+                  <div>{p.pheno}</div>
+                  <div>{Math.round(p.pct * 10000) / 100}%</div>
+                </Stack>
+              ))}
+            </Stack>
           </Stack>
-          <Typography>Female Kittens</Typography>
-          <Stack alignItems="center">
-            {genes?.female?.map((p, i) => (
-              <div key={i}>{p}</div>
-            ))}
+          <Stack alignItems="center" spacing={1}>
+            <Typography>Female Kittens</Typography>
+            <Stack alignItems="center" spacing={1}>
+              {genes?.female?.map((p, i) => (
+                <Stack key={i} direction="row" spacing={1}>
+                  <div>{p.pheno}</div>
+                  <div>{Math.round(p.pct * 10000) / 100}%</div>
+                </Stack>
+              ))}
+            </Stack>
           </Stack>
         </Stack>
       )}
@@ -92,16 +102,24 @@ export function Calculator() {
   );
 }
 
-const mapGenes = (genes) =>
-  Object.fromEntries(
-    Object.entries(genes.bases).map(([sex, bases]) => [
-      sex,
-      bases
-        .map((base) => spreadGenes(base, genes))
-        .flat(8)
-        .map(phenoString),
-    ])
+const mapGenes = (genes) => {
+  return Object.fromEntries(
+    Object.entries(genes.bases).map(([sex, bases]) => {
+      let total = 0;
+      return [
+        sex,
+        Object.entries(
+          bases
+            .map((base) => spreadGenes(base, genes))
+            .flat(8)
+            .map(phenoString)
+            .map((x) => (total++, x))
+            .reduce((a, c) => ({ ...a, [c]: 1 + (a[c] || 0) }), {})
+        ).map(([pheno, count]) => ({ pheno, count, pct: count / total })),
+      ];
+    })
   );
+};
 
 const spreadGenes = (base, genes) => {
   return genes.dilutes.map((dilute) =>
