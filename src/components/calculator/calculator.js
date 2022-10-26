@@ -1,4 +1,4 @@
-import { Button, Stack, Typography } from "@mui/material";
+import { Button, Grid, Stack, Typography } from "@mui/material";
 import { useState } from "react";
 import { HET_TABBY, SOLID, TABBY } from "../../consts/agouti";
 import { BLACK, RED, TORTIE } from "../../consts/base";
@@ -76,25 +76,25 @@ export function Calculator() {
         <Stack alignItems="space-evenly" direction="row" spacing={8}>
           <Stack alignItems="center" spacing={1}>
             <Typography>Male Kittens</Typography>
-            <Stack alignItems="center" spacing={1}>
-              {genes?.male?.map((p, i) => (
-                <Stack key={i} direction="row" spacing={1}>
-                  <div>{p.pheno}</div>
-                  <div>{Math.round(p.pct * 10000) / 100}%</div>
-                </Stack>
+            <Grid container spacing={1}>
+              {genes?.male?.map((p) => (
+                <>
+                  <Grid item xs={10}>{p.pheno}</Grid>
+                  <Grid item xs={2}>{Math.round(p.pct * 10000) / 100}%</Grid>
+                </>
               ))}
-            </Stack>
+            </Grid>
           </Stack>
           <Stack alignItems="center" spacing={1}>
             <Typography>Female Kittens</Typography>
-            <Stack alignItems="center" spacing={1}>
+            <Grid container spacing={1}>
               {genes?.female?.map((p, i) => (
-                <Stack key={i} direction="row" spacing={1}>
-                  <div>{p.pheno}</div>
-                  <div>{Math.round(p.pct * 10000) / 100}%</div>
-                </Stack>
+                <>
+                  <Grid item xs={10}>{p.pheno}</Grid>
+                  <Grid item xs={2}>{Math.round(p.pct * 10000) / 100}%</Grid>
+                </>
               ))}
-            </Stack>
+            </Grid>
           </Stack>
         </Stack>
       )}
