@@ -303,6 +303,7 @@ const calculateAgoutis = (male, female) => {
 };
 
 const calculatePatterns = (male1, male2, female1, female2) => {
+  if ([male1, male2, female1, female2].includes(UNKNOWN)) return [[UNKNOWN, UNKNOWN]];
   let patterns = [
     [male1, female1].sort(sortDesc),
     [male1, female2].sort(sortDesc),
@@ -313,6 +314,7 @@ const calculatePatterns = (male1, male2, female1, female2) => {
 };
 
 const calculateSpotted = (male, female) => {
+  if ([male, female].includes(UNKNOWN)) return [UNKNOWN];
   const spotted = [];
   switch (true) {
     case male === UNKNOWN && female === UNKNOWN:
@@ -356,6 +358,7 @@ const calculateSpotted = (male, female) => {
 };
 
 const calculateTicked = (male, female) => {
+  if ([male, female].includes(UNKNOWN)) return [UNKNOWN];
   const ticked = [];
   switch (true) {
     case male === UNKNOWN && female === UNKNOWN:
