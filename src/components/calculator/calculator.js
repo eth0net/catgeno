@@ -1,5 +1,5 @@
-import { Button, Grid, Stack, Typography } from "@mui/material";
-import { useState } from "react";
+import { Button, Grid, Stack, TextField, Typography } from "@mui/material";
+import { useState, Fragment } from "react";
 import { HET_TABBY, SOLID, TABBY } from "../../consts/agouti";
 import { BLACK, RED, TORTIE } from "../../consts/base";
 import { DILUTED, HET_DILUTED, NON_DILUTED } from "../../consts/dilute";
@@ -31,8 +31,13 @@ export function Calculator() {
   const [male, setMale] = useCat();
   const [female, setFemale] = useCat();
   const [genes, setGenes] = useState();
+  const [litter, setLitter] = useState();
+  const [litterSize, setLitterSize] = useState();
 
   const calculate = () => {
+    setGenes();
+    setLitter();
+
     const bases = calculateBases(male.base, female.base);
     const dilutes = calculateDilutes(male.dilute, female.dilute);
     const agoutis = calculateAgoutis(male.agouti, female.agouti);
@@ -48,19 +53,39 @@ export function Calculator() {
     const whites = calculateWhites(male.white, female.white);
     const eyes = calculateEyes(male.eyes, female.eyes);
 
-    setGenes(
-      mapGenes({
-        bases,
-        dilutes,
-        agoutis,
-        patterns,
-        spotted,
-        ticked,
-        silvers,
-        whites,
-        eyes,
-      })
-    );
+    return mapGenes({
+      bases,
+      dilutes,
+      agoutis,
+      patterns,
+      spotted,
+      ticked,
+      silvers,
+      whites,
+      eyes,
+    });
+  };
+
+  const calculatePossibilities = () => {
+    setGenes(calculate());
+  };
+
+  const calculateLitter = () => {
+    let genes = calculate();
+
+    let l = [];
+    for (let i = 0; i < litterSize; i++) {
+      let sex = Math.round(Math.random()) === 1 ? "Male" : "Female";
+      let roll = Math.random() * 100;
+      for (const pheno of genes[sex.toLowerCase()]) {
+        roll -= pheno.pct * 100;
+        if (roll <= 0) {
+          l.push({ ...pheno, sex });
+          break;
+        }
+      }
+    }
+    setLitter(l);
   };
 
   return (
@@ -70,18 +95,29 @@ export function Calculator() {
         <Cat state={female} set={setFemale} female />
       </Stack>
 
-      <Button onClick={calculate}>Calculate</Button>
+      <Stack direction="row" spacing={4} padding={2}>
+        <Button onClick={calculatePossibilities}>Show Possibilities</Button>
+        <TextField
+          label="Litter Size"
+          variant="outlined"
+          type="number"
+          inputProps={{ min: 1 }}
+          value={litterSize}
+          onChange={(e) => setLitterSize(e.target.value)}
+        />
+        <Button onClick={calculateLitter}>Show Litter</Button>
+      </Stack>
 
       {genes && (
         <Stack alignItems="space-evenly" direction="row" spacing={8}>
           <Stack alignItems="center" spacing={1}>
             <Typography>Male Kittens</Typography>
             <Grid container spacing={1}>
-              {genes?.male?.map((p) => (
-                <>
+              {genes?.male?.map((p, i) => (
+                <Fragment key={i}>
                   <Grid item xs={10}>{p.pheno}</Grid>
                   <Grid item xs={2}>{Math.round(p.pct * 10000) / 100}%</Grid>
-                </>
+                </Fragment>
               ))}
             </Grid>
           </Stack>
@@ -89,13 +125,27 @@ export function Calculator() {
             <Typography>Female Kittens</Typography>
             <Grid container spacing={1}>
               {genes?.female?.map((p, i) => (
-                <>
+                <Fragment key={i}>
                   <Grid item xs={10}>{p.pheno}</Grid>
                   <Grid item xs={2}>{Math.round(p.pct * 10000) / 100}%</Grid>
-                </>
+                </Fragment>
               ))}
             </Grid>
           </Stack>
+        </Stack>
+      )}
+
+      {litter && (
+        <Stack alignItems="center" spacing={1}>
+          <Typography>Litter</Typography>
+          <Grid container spacing={1}>
+            {litter?.map(({ pheno, sex }, idx) => (
+              <Fragment key={idx}>
+                <Grid item xs={6}>{pheno}</Grid>
+                <Grid item xs={6}>{sex}</Grid>
+              </Fragment>
+            ))}
+          </Grid>
         </Stack>
       )}
     </Stack>
@@ -113,7 +163,7 @@ const mapGenes = (genes) => {
             .map((base) => spreadGenes(base, genes))
             .flat(8)
             .map(phenoString)
-            .map((x) => (total++, x))
+            .map((x) => { total++; return x; })
             .reduce((a, c) => ({ ...a, [c]: 1 + (a[c] || 0) }), {})
         ).map(([pheno, count]) => ({ pheno, count, pct: count / total }))
           .sort((a, b) => b.pct - a.pct),
