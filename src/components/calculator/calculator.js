@@ -115,7 +115,8 @@ const mapGenes = (genes) => {
             .map(phenoString)
             .map((x) => (total++, x))
             .reduce((a, c) => ({ ...a, [c]: 1 + (a[c] || 0) }), {})
-        ).map(([pheno, count]) => ({ pheno, count, pct: count / total })),
+        ).map(([pheno, count]) => ({ pheno, count, pct: count / total }))
+          .sort((a, b) => b.pct - a.pct),
       ];
     })
   );
