@@ -179,28 +179,27 @@ const phenoString = ({
       break;
   }
 
-  if (agouti === HET_TABBY || agouti === TABBY) {
-    if (ticked === TICKED || ticked === HET_TICKED) {
-      pheno.push("Ticked Tabby");
-    } else if (spotted === SPOTTED || spotted === HET_SPOTTED) {
-      pheno.push("Spotted Tabby");
-    } else if (pattern1 === MACKEREL || pattern2 === MACKEREL) {
-      pheno.push("Mackerel Tabby");
-    } else if (pattern1 === CLASSIC || pattern2 === CLASSIC) {
-      pheno.push("Classic Tabby");
-    }
+  if (silver === HET_SILVER || silver === SILVER) {
+    pheno.push(agouti === SOLID ? "Smoke" : "Silver");
   }
 
-  if (silver === HET_SILVER || silver === SILVER) {
-    pheno.push("Silver");
+  if (agouti === HET_TABBY || agouti === TABBY) {
+    if (ticked === TICKED || ticked === HET_TICKED) {
+      pheno.push("Ticked");
+    } else if (spotted === SPOTTED || spotted === HET_SPOTTED) {
+      pheno.push("Spotted");
+    } else if (pattern1 === MACKEREL || pattern2 === MACKEREL) {
+      pheno.push("Mackerel");
+    } else if (pattern1 === CLASSIC || pattern2 === CLASSIC) {
+      pheno.push("Classic");
+    }
+    pheno.push("Tabby")
   }
 
   switch (white) {
     case HET_SPOT_WHITE:
-      pheno.push("0-50% White");
-      break;
     case SPOT_WHITE:
-      pheno.push("50-100% White");
+      pheno.push("with White");
       break;
     case HET_DOM_WHITE:
     case DOM_SPOT_WHITE:

@@ -26,7 +26,7 @@ import {
 import { Select } from "./select";
 
 export function Cat({ female, state, set }) {
-  const silverLabel = state.agouti === 0 ? "Silver" : "Smoke";
+  const silverLabel = state.agouti === 0 ? "Smoke" : "Silver";
 
   return (
     <Box>
