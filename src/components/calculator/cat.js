@@ -16,12 +16,9 @@ import {
 } from "../../consts/pattern";
 import { HET_SILVER, NON_SILVER, SILVER } from "../../consts/silver";
 import {
-  DOM_WHITE,
-  HET_DOM_SPOT_WHITE,
   HET_DOM_WHITE,
   HET_SPOT_WHITE,
   NON_WHITE,
-  SPOT_WHITE,
 } from "../../consts/white";
 import { Select } from "./select";
 
@@ -122,11 +119,8 @@ export function Cat({ female, state, set }) {
         <Grid item xs={12} sm={6} md={4}>
           <Select label="White" value={state?.white} onChange={set?.white}>
             <MenuItem value={NON_WHITE}>No white</MenuItem>
-            <MenuItem value={HET_SPOT_WHITE}>0-50% White Spot</MenuItem>
-            <MenuItem value={SPOT_WHITE}>50-100% White Spot</MenuItem>
-            <MenuItem value={HET_DOM_WHITE}>White, het</MenuItem>
-            <MenuItem value={HET_DOM_SPOT_WHITE}>White, het spot</MenuItem>
-            <MenuItem value={DOM_WHITE}>White</MenuItem>
+            <MenuItem value={HET_SPOT_WHITE}>With White</MenuItem>
+            <MenuItem value={HET_DOM_WHITE}>White</MenuItem>
           </Select>
         </Grid>
 
