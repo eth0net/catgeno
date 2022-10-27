@@ -32,7 +32,7 @@ export function Calculator() {
   const [female, setFemale] = useCat();
   const [genes, setGenes] = useState();
   const [litter, setLitter] = useState();
-  const [litterSize, setLitterSize] = useState();
+  const [litterSize, setLitterSize] = useState(0);
 
   const calculate = () => {
     setGenes();
@@ -105,29 +105,29 @@ export function Calculator() {
           value={litterSize}
           onChange={(e) => setLitterSize(e.target.value)}
         />
-        <Button onClick={calculateLitter}>Show Litter</Button>
+        <Button onClick={calculateLitter} disabled={!litterSize}>Show Litter</Button>
       </Stack>
 
       {genes && (
-        <Stack alignItems="space-evenly" direction="row" spacing={8}>
-          <Stack alignItems="center" spacing={1}>
-            <Typography>Male Kittens</Typography>
+        <Stack alignItems="space-evenly" direction="row" spacing={8} padding={2}>
+          <Stack spacing={1}>
+            <Typography align="center">Male Kittens</Typography>
             <Grid container spacing={1}>
-              {genes?.male?.map((p, i) => (
-                <Fragment key={i}>
-                  <Grid item xs={10}>{p.pheno}</Grid>
-                  <Grid item xs={2}>{Math.round(p.pct * 10000) / 100}%</Grid>
+              {genes?.male?.map(({ pheno, pct }, idx) => (
+                <Fragment key={idx}>
+                  <Grid item xs={8}>{pheno}</Grid>
+                  <Grid item xs={4}>{Math.round(pct * 10000) / 100}%</Grid>
                 </Fragment>
               ))}
             </Grid>
           </Stack>
-          <Stack alignItems="center" spacing={1}>
-            <Typography>Female Kittens</Typography>
+          <Stack spacing={1}>
+            <Typography textAlign="center">Female Kittens</Typography>
             <Grid container spacing={1}>
-              {genes?.female?.map((p, i) => (
-                <Fragment key={i}>
-                  <Grid item xs={10}>{p.pheno}</Grid>
-                  <Grid item xs={2}>{Math.round(p.pct * 10000) / 100}%</Grid>
+              {genes?.female?.map(({ pheno, pct }, idx) => (
+                <Fragment key={idx}>
+                  <Grid item xs={8}>{pheno}</Grid>
+                  <Grid item xs={4}>{Math.round(pct * 10000) / 100}%</Grid>
                 </Fragment>
               ))}
             </Grid>
@@ -135,14 +135,14 @@ export function Calculator() {
         </Stack>
       )}
 
-      {litter && (
+      {!!litter?.length && (
         <Stack alignItems="center" spacing={1}>
           <Typography>Litter</Typography>
           <Grid container spacing={1}>
             {litter?.map(({ pheno, sex }, idx) => (
               <Fragment key={idx}>
-                <Grid item xs={6}>{pheno}</Grid>
-                <Grid item xs={6}>{sex}</Grid>
+                <Grid item xs={8}>{pheno}</Grid>
+                <Grid item xs={4}>{sex}</Grid>
               </Fragment>
             ))}
           </Grid>
