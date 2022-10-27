@@ -30,13 +30,13 @@ import { Cat } from "./cat";
 export function Calculator() {
   const [male, setMale] = useCat();
   const [female, setFemale] = useCat();
-  const [genes, setGenes] = useState();
+  const [phenos, setPhenos] = useState();
   const [litter, setLitter] = useState();
   const [litterSize, setLitterSize] = useState(0);
 
   const calculate = () => {
-    setGenes();
-    setLitter();
+    setPhenos(null);
+    setLitter(null);
 
     const bases = calculateBases(male.base, female.base);
     const dilutes = calculateDilutes(male.dilute, female.dilute);
@@ -67,7 +67,7 @@ export function Calculator() {
   };
 
   const calculatePossibilities = () => {
-    setGenes(calculate());
+    setPhenos(calculate());
   };
 
   const calculateLitter = () => {
@@ -108,12 +108,12 @@ export function Calculator() {
         <Button onClick={calculateLitter} disabled={!litterSize}>Show Litter</Button>
       </Stack>
 
-      {genes && (
+      {phenos && (
         <Stack alignItems="space-evenly" direction="row" spacing={8} padding={2}>
           <Stack spacing={1}>
             <Typography align="center">Male Kittens</Typography>
             <Grid container spacing={1}>
-              {genes?.male?.map(({ pheno, pct }, idx) => (
+              {phenos?.male?.map(({ pheno, pct }, idx) => (
                 <Fragment key={idx}>
                   <Grid item xs={8}>{pheno}</Grid>
                   <Grid item xs={4}>{Math.round(pct * 10000) / 100}%</Grid>
@@ -124,7 +124,7 @@ export function Calculator() {
           <Stack spacing={1}>
             <Typography textAlign="center">Female Kittens</Typography>
             <Grid container spacing={1}>
-              {genes?.female?.map(({ pheno, pct }, idx) => (
+              {phenos?.female?.map(({ pheno, pct }, idx) => (
                 <Fragment key={idx}>
                   <Grid item xs={8}>{pheno}</Grid>
                   <Grid item xs={4}>{Math.round(pct * 10000) / 100}%</Grid>
