@@ -20,6 +20,8 @@ export function Calculator() {
   const [phenos, setPhenos] = useState<mappedGeneDict>();
   const [litter, setLitter] = useState<litterMember[]>();
   const [litterSize, setLitterSize] = useState(0);
+  const [showPhenos, setShowPhenos] = useState(false);
+  const [showLitter, setShowLitter] = useState(false);
 
   const calculate = () => {
     // setPhenos(null);
@@ -55,6 +57,8 @@ export function Calculator() {
 
   const calculatePossibilities = () => {
     setPhenos(calculate());
+    setShowPhenos(true);
+    setShowLitter(false);
   };
 
   const calculateLitter = () => {
@@ -73,6 +77,8 @@ export function Calculator() {
       }
     }
     setLitter(l);
+    setShowPhenos(false);
+    setShowLitter(true);
   };
 
   return (
@@ -97,7 +103,7 @@ export function Calculator() {
         </Button>
       </Stack>
 
-      {phenos && (
+      {phenos && showPhenos && (
         <Stack
           alignItems="space-evenly"
           direction="row"
@@ -137,7 +143,7 @@ export function Calculator() {
         </Stack>
       )}
 
-      {!!litter?.length && (
+      {!!litter?.length && showLitter && (
         <Stack alignItems="center" spacing={1}>
           <Typography>Litter</Typography>
           <Grid container spacing={1}>
