@@ -20,12 +20,20 @@ export function Cat({ female, state, set }: CatProps) {
 
   return (
     <Box>
-      <Typography paddingBottom={2} textAlign="center">
+      <Typography
+        sx={{
+          paddingBottom: 2,
+          textAlign: "center"
+        }}>
         {female ? "Female" : "Male"}
       </Typography>
-
       <Grid container spacing={2}>
-        <Grid item xs={12} sm={6} md={4}>
+        <Grid
+          size={{
+            xs: 12,
+            sm: 6,
+            md: 4
+          }}>
           <Select label="Base" value={state?.base} onChange={set?.base}>
             <MenuItem value={Base.BLACK}>Black</MenuItem>
             <MenuItem value={Base.RED}>Red</MenuItem>
@@ -33,7 +41,12 @@ export function Cat({ female, state, set }: CatProps) {
           </Select>
         </Grid>
 
-        <Grid item xs={12} sm={6} md={4}>
+        <Grid
+          size={{
+            xs: 12,
+            sm: 6,
+            md: 4
+          }}>
           <Select label="Dilute" value={state?.dilute} onChange={set?.dilute}>
             <MenuItem value={Dilute.NON_DILUTED}>Non-dilute</MenuItem>
             <MenuItem value={Dilute.HET_DILUTED}>Non-dilute, carrier</MenuItem>
@@ -41,7 +54,12 @@ export function Cat({ female, state, set }: CatProps) {
           </Select>
         </Grid>
 
-        <Grid item xs={12} sm={6} md={4}>
+        <Grid
+          size={{
+            xs: 12,
+            sm: 6,
+            md: 4
+          }}>
           <Select label="Tabby" value={state?.agouti} onChange={set?.agouti}>
             <MenuItem value={Agouti.SOLID}>Solid</MenuItem>
             <MenuItem value={Agouti.HET_TABBY}>Tabby, het</MenuItem>
@@ -49,7 +67,12 @@ export function Cat({ female, state, set }: CatProps) {
           </Select>
         </Grid>
 
-        <Grid item xs={12} sm={6} md={4}>
+        <Grid
+          size={{
+            xs: 12,
+            sm: 6,
+            md: 4
+          }}>
           <Select
             label="Tabby Pattern 1"
             value={state?.pattern1}
@@ -61,7 +84,12 @@ export function Cat({ female, state, set }: CatProps) {
           </Select>
         </Grid>
 
-        <Grid item xs={12} sm={6} md={4}>
+        <Grid
+          size={{
+            xs: 12,
+            sm: 6,
+            md: 4
+          }}>
           <Select
             label="Tabby Pattern 2"
             value={state?.pattern2}
@@ -73,7 +101,12 @@ export function Cat({ female, state, set }: CatProps) {
           </Select>
         </Grid>
 
-        <Grid item xs={12} sm={6} md={4}>
+        <Grid
+          size={{
+            xs: 12,
+            sm: 6,
+            md: 4
+          }}>
           <Select
             label="Spotted"
             value={state?.spotted}
@@ -86,7 +119,12 @@ export function Cat({ female, state, set }: CatProps) {
           </Select>
         </Grid>
 
-        <Grid item xs={12} sm={6} md={4}>
+        <Grid
+          size={{
+            xs: 12,
+            sm: 6,
+            md: 4
+          }}>
           <Select label="Ticked" value={state?.ticked} onChange={set?.ticked}>
             <MenuItem value={Ticked.UNKNOWN}>Unknown</MenuItem>
             <MenuItem value={Ticked.NON_TICKED}>Non-ticked</MenuItem>
@@ -95,7 +133,12 @@ export function Cat({ female, state, set }: CatProps) {
           </Select>
         </Grid>
 
-        <Grid item xs={12} sm={6} md={4}>
+        <Grid
+          size={{
+            xs: 12,
+            sm: 6,
+            md: 4
+          }}>
           <Select
             label={silverLabel}
             value={state?.silver}
@@ -109,7 +152,12 @@ export function Cat({ female, state, set }: CatProps) {
           </Select>
         </Grid>
 
-        <Grid item xs={12} sm={6} md={4}>
+        <Grid
+          size={{
+            xs: 12,
+            sm: 6,
+            md: 4
+          }}>
           <Select label="White" value={state?.white} onChange={set?.white}>
             <MenuItem value={White.NON_WHITE}>No white</MenuItem>
             <MenuItem value={White.HET_SPOT_WHITE}>With White</MenuItem>
@@ -117,7 +165,12 @@ export function Cat({ female, state, set }: CatProps) {
           </Select>
         </Grid>
 
-        <Grid item xs={12} sm={6} md={4}>
+        <Grid
+          size={{
+            xs: 12,
+            sm: 6,
+            md: 4
+          }}>
           <Select label="Eyes" value={state?.eyes} onChange={set?.eyes}>
             <MenuItem value={Eyes.NON_BLUE}>Non-blue</MenuItem>
             <MenuItem value={Eyes.HET_BLUE}>Blue, het</MenuItem>

@@ -82,43 +82,50 @@ export function Calculator() {
   };
 
   return (
-    <Stack alignItems="center" spacing={2}>
-      <Stack direction="row" spacing={4} padding={2}>
+    <Stack spacing={2} sx={{
+      alignItems: "center"
+    }}>
+      <Stack direction="row" spacing={4} sx={{
+        padding: 2
+      }}>
         <Cat state={male} set={setMale} />
         <Cat state={female} set={setFemale} female />
       </Stack>
-
-      <Stack direction="row" spacing={4} padding={2}>
+      <Stack direction="row" spacing={4} sx={{
+        padding: 2
+      }}>
         <Button onClick={calculatePossibilities}>Show Possibilities</Button>
         <TextField
           label="Litter Size"
           variant="outlined"
           type="number"
-          inputProps={{ min: 1 }}
           value={litterSize}
           onChange={(e) => setLitterSize(parseInt(e.target.value))}
+          slotProps={{
+            htmlInput: { min: 1 }
+          }}
         />
         <Button onClick={calculateLitter} disabled={!litterSize}>
           Show Litter
         </Button>
       </Stack>
-
       {phenos && showPhenos && (
         <Stack
-          alignItems="space-evenly"
           direction="row"
           spacing={8}
-          padding={2}
-        >
+          sx={{
+            alignItems: "space-evenly",
+            padding: 2
+          }}>
           <Stack spacing={1}>
             <Typography align="center">Male Kittens</Typography>
             <Grid container spacing={1}>
               {phenos?.male?.map(({ pheno, pct }, idx) => (
                 <Fragment key={idx}>
-                  <Grid item xs={8}>
+                  <Grid size={8}>
                     {pheno}
                   </Grid>
-                  <Grid item xs={4}>
+                  <Grid size={4}>
                     {Math.round(pct * 10000) / 100}%
                   </Grid>
                 </Fragment>
@@ -126,14 +133,16 @@ export function Calculator() {
             </Grid>
           </Stack>
           <Stack spacing={1}>
-            <Typography textAlign="center">Female Kittens</Typography>
+            <Typography sx={{
+              textAlign: "center"
+            }}>Female Kittens</Typography>
             <Grid container spacing={1}>
               {phenos?.female?.map(({ pheno, pct }, idx) => (
                 <Fragment key={idx}>
-                  <Grid item xs={8}>
+                  <Grid size={8}>
                     {pheno}
                   </Grid>
-                  <Grid item xs={4}>
+                  <Grid size={4}>
                     {Math.round(pct * 10000) / 100}%
                   </Grid>
                 </Fragment>
@@ -142,17 +151,18 @@ export function Calculator() {
           </Stack>
         </Stack>
       )}
-
       {!!litter?.length && showLitter && (
-        <Stack alignItems="center" spacing={1}>
+        <Stack spacing={1} sx={{
+          alignItems: "center"
+        }}>
           <Typography>Litter</Typography>
           <Grid container spacing={1}>
             {litter?.map(({ pheno, sex }, idx) => (
               <Fragment key={idx}>
-                <Grid item xs={8}>
+                <Grid size={8}>
                   {pheno}
                 </Grid>
-                <Grid item xs={4}>
+                <Grid size={4}>
                   {sex}
                 </Grid>
               </Fragment>
